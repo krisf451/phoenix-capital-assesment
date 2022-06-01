@@ -7,12 +7,13 @@ const {
   deleteLandHolding,
   updateLandHolding,
 } = require("../controllers/landHoldings.js");
+const auth = require("../middleware/auth.js");
 
-router.route("/").get(getAllLandHoldings).post(createLandHolding);
+router.route("/").get(auth, getAllLandHoldings).post(auth, createLandHolding);
 router
   .route("/:id")
-  .get(getLandHoldingById)
-  .delete(deleteLandHolding)
-  .put(updateLandHolding);
+  .get(auth, getLandHoldingById)
+  .delete(auth, deleteLandHolding)
+  .put(auth, updateLandHolding);
 
 module.exports = router;

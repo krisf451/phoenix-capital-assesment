@@ -1,4 +1,5 @@
 const getAllOwners = (req, res) => {
+  console.log(req.user);
   res.json({ message: "Get ALL owners" });
 };
 const getOwnerById = (req, res) => {
