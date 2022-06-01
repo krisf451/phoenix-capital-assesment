@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/user.js");
 
+//SIGNUP
 const signup = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -42,9 +43,49 @@ const signup = asyncHandler(async (req, res) => {
   }
 });
 
-const signin = async (req, res) => {
-  res.json({ message: "signup route working" });
-};
+//SIGNIN
+const signin = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Please add all fields");
+  }
+
+  //check if the user already exists
+  const existingUser = await User.findOne({ email });
+
+  if (!existingUser) {
+    res.status(400);
+    throw new Error("User does not exist");
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(
+    password,
+    existingUser.password
+  );
+  if (!isPasswordCorrect) {
+    res.status(400);
+    throw new Error("Invalid Credentials, Passwords do not match");
+  }
+
+  const token = jwt.sign(
+    { email: existingUser.email, id: existingUser._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "30d" }
+  );
+
+  if (existingUser) {
+    res.status(200).json({
+      message: "Signin Success!",
+      _id: existingUser._id,
+      email: existingUser.email,
+      token: token,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Something went wrong trying to signin");
+  }
+});
 
 //just a test route for checking all users
 const getAllUsers = asyncHandler(async (req, res) => {
