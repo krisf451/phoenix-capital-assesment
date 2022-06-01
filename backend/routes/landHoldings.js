@@ -16,4 +16,7 @@ router
   .delete(auth, deleteLandHolding)
   .put(auth, updateLandHolding);
 
+
+
+
 module.exports = router;
