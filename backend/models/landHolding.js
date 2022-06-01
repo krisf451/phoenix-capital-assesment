@@ -10,7 +10,11 @@ const landHoldingSchema = mongoose.Schema(
     section: { type: String, required: true },
     township: { type: String, required: true },
     range: { type: String, required: true },
-    titleSource: { type: String, required: true },
+    titleSource: {
+      type: String,
+      required: true,
+      enum: ["class a", "class b", "class c", "class d"],
+    },
   },
   { timestamps: true }
 );
