@@ -7,7 +7,7 @@ require("dotenv").config();
 
 // const landHoldingRoutes = require("./routes/landHoldings.js");
 const ownerRoutes = require("./routes/owners.js");
-// const authRoutes = require("./routes/auth.js");
+const authRoutes = require("./routes/auth.js");
 
 const app = express();
 
@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 9000;
 
 // app.use("/api/v1/landHoldings", landHoldingRoutes);
 app.use("/api/v1/owners", ownerRoutes);
-// app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.get("/api/v1", (req, res) => {
   res.json({ message: "Sanity Check Passed" });
