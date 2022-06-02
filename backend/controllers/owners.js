@@ -1,5 +1,4 @@
 const Owner = require("../models/owner.js");
-const LandHolding = require("../models/landHolding.js");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 
