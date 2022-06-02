@@ -158,7 +158,6 @@ const deleteLandHolding = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error(`Error deleting land holding with id ${req.params.id}`);
   }
-});
 
 module.exports = {
   getAllLandHoldings,
