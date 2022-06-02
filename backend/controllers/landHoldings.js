@@ -118,12 +118,26 @@ const createLandHolding = asyncHandler(async (req, res) => {
   }
 });
 
-const updateLandHolding = (req, res) => {
-  res.json({ message: "update landholding" });
-};
-const deleteLandHolding = (req, res) => {
-  res.json({ message: "delete landholding" });
-};
+const updateLandHolding = asyncHandler(async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    throw new Error(`No owner with ID ${req.params.id} found`);
+  }
+  const landHolding = req.body;
+});
+const deleteLandHolding = asyncHandler(async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    throw new Error(`No owner with ID ${req.params.id} found`);
+  }
+  const isDeleted = await LandHolding.findByIdAndDelete(req.params.id);
+  if (isDeleted) {
+    res.status(200).json({
+      message: `Succesfully deleted land holding with ID ${req.params.id}`,
+    });
+  } else {
+    res.status(400);
+    throw new Error(`Error deleting land holding with id ${req.params.id}`);
+  }
+});
 
 module.exports = {
   getAllLandHoldings,
