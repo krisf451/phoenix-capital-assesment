@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const landHoldingSchema = mongoose.Schema(
   {
-    owner: { type: String, required: true },
+    ownerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Owner",
+    },
     legalEntity: { type: String, required: true },
     netMineralAcres: { type: String, required: true },
     royaltyPercentage: { type: String, required: true },
