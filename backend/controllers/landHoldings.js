@@ -61,7 +61,7 @@ const createLandHolding = asyncHandler(async (req, res) => {
   ) {
     throw new Error("Please enter all fields");
   }
-
+  //test change internet error
   //check if the owner is a valid owner
   const owner = await Owner.findById(ownerId);
   if (!owner) {
