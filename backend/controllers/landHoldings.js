@@ -3,6 +3,8 @@ const Owner = require("../models/owner.js");
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 
+//TODO: Middleware for validating our regex stuff, so we can check on create and on update
+
 //GET ALL
 const getAllLandHoldings = asyncHandler(async (req, res) => {
   const landHoldings = await LandHolding.find();
@@ -118,12 +120,31 @@ const createLandHolding = asyncHandler(async (req, res) => {
   }
 });
 
+//UPDATE LAND HOLDING
 const updateLandHolding = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     throw new Error(`No owner with ID ${req.params.id} found`);
   }
   const landHolding = req.body;
+
+  const updatedLandHolding = await LandHolding.findByIdAndUpdate(
+    req.params.id,
+    landHolding,
+    { new: true }
+  );
+
+  if (updateLandHolding) {
+    res.status(200).json({
+      message: `Succesfully updated landholding with id ${req.params.id}`,
+      data: updatedLandHolding,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Error updating land holding");
+  }
 });
+
+//DELETE LANDHOLDING
 const deleteLandHolding = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     throw new Error(`No owner with ID ${req.params.id} found`);

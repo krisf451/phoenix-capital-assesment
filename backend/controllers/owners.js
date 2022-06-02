@@ -89,10 +89,15 @@ const deleteOwner = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     throw new Error(`No owner with ID ${req.params.id} found`);
   }
-  await Owner.findByIdAndDelete(req.params.id);
-  res.status(200).json({
-    message: `Successfully deleted Owner with ID ${req.params.id}`,
-  });
+  const isDeleted = await Owner.findByIdAndDelete(req.params.id);
+  if (isDeleted) {
+    res.status(200).json({
+      message: `Successfully deleted Owner with ID ${req.params.id}`,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Error deleting owner");
+  }
 });
 
 module.exports = {
