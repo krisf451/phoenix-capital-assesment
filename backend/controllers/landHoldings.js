@@ -65,9 +65,23 @@ const createLandHolding = asyncHandler(async (req, res) => {
   }
 
   //check if the owner is a valid owner
-  const owner = await Owner.find({ name: ownerName });
-  if (!owner.length) {
+  const [owner] = await Owner.find({ name: ownerName });
+  if (!owner) {
     throw new Error(`No owner found with that name`);
+  }
+
+  //lets do regex for the section/township/range
+  const rightFormatSection = new RegExp(/^[0-9]{3}$/);
+  const rightFormatTownship = new RegExp(/^[0-9]{3}[NS]$/);
+  const rightFormatRange = new RegExp(/^[0-9]{3}[EW]$/);
+  if (
+    !rightFormatRange.test(range) ||
+    !rightFormatSection.test(section) ||
+    !rightFormatTownship.test(township)
+  ) {
+    throw new Error(
+      "something wrong with the formatting of the section/township or range"
+    );
   }
 
   const sectionName = `${section}-${township}-${range}`;
@@ -87,12 +101,12 @@ const createLandHolding = asyncHandler(async (req, res) => {
   });
   await newLandHolding.save();
 
-  //lets add 1 to the owners totalHoldings
-  // const addToOwnersTotalHoldings = await Owner.findByIdAndUpdate(
-  //   ownerId,
-  //   { ...owner, totalHoldings: owner.totalHoldings + 1 },
-  //   { new: true }
-  // );
+  await Owner.findByIdAndUpdate(
+    owner._id,
+    { totalHoldings: owner.totalHoldings + 1 },
+    { new: true }
+  );
+
   if (newLandHolding) {
     res.status(200).json({
       message: "Successfully created a new land holding",
