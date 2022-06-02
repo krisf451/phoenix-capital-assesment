@@ -60,12 +60,41 @@ const createOwner = asyncHandler(async (req, res) => {
   }
 });
 
-const updateOwner = (req, res) => {
-  res.json({ message: "update owner" });
-};
-const deleteOwner = (req, res) => {
-  res.json({ message: "delete owner" });
-};
+//UPDATE OWNER DATA
+const updateOwner = asyncHandler(async (req, res) => {
+  const { id: _id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    throw new Error(`No owner with ID ${_id} found`);
+  }
+  const owner = req.body;
+
+  const updatedOwner = await Owner.findByIdAndUpdate(
+    _id,
+    { ...owner, _id },
+    { new: true }
+  );
+
+  if (updatedOwner) {
+    res.status(200).json({
+      message: "Updated Owner Successfully!",
+      data: updatedOwner,
+    });
+  } else {
+    throw new Error("Error updating owner");
+  }
+});
+
+//DELETE OWNER
+//TODO: THIS IS WHERE WE NEED TO FIGURE OUT THE LOGIC FOR DELETING ALL LANDHOLDINGS RELATED TO THE OWNER THAT WAS DELETED
+const deleteOwner = asyncHandler(async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    throw new Error(`No owner with ID ${req.params.id} found`);
+  }
+  await Owner.findByIdAndDelete(req.params.id);
+  res.status(200).json({
+    message: `Successfully deleted Owner with ID ${req.params.id}`,
+  });
+});
 
 module.exports = {
   getAllOwners,
