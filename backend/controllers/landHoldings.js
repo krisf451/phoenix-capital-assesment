@@ -37,20 +37,22 @@ const getLandHoldingById = asyncHandler(async (req, res) => {
 //CREATE NEW LANDHOLDING
 const createLandHolding = asyncHandler(async (req, res) => {
   const {
-    ownerId,
+    ownerName,
     legalEntity,
     netMineralAcres,
     royaltyPercentage,
-    sectionName,
     section,
     township,
     range,
     titleSource,
   } = req.body;
 
+  //saving time here so we dont have to do this during our call
+  const lowerTitleSource = titleSource.toLowerCase();
+
   //TODO: can optimize this with a validation library like yup
   if (
-    !ownerId ||
+    !ownerName ||
     !legalEntity ||
     !netMineralAcres ||
     !royaltyPercentage ||
@@ -61,11 +63,44 @@ const createLandHolding = asyncHandler(async (req, res) => {
   ) {
     throw new Error("Please enter all fields");
   }
-  //test change internet error
+
   //check if the owner is a valid owner
-  const owner = await Owner.findById(ownerId);
-  if (!owner) {
-    throw new Error(`No owner found with that ID`);
+  const owner = await Owner.find({ name: ownerName });
+  if (!owner.length) {
+    throw new Error(`No owner found with that name`);
+  }
+
+  const sectionName = `${section}-${township}-${range}`;
+  const name = `${sectionName}-${legalEntity}`;
+
+  const newLandHolding = await LandHolding.create({
+    name: name,
+    owner: ownerName,
+    legalEntity,
+    netMineralAcres,
+    royaltyPercentage,
+    sectionName: sectionName,
+    section,
+    township,
+    range,
+    titleSource: lowerTitleSource,
+  });
+  await newLandHolding.save();
+
+  //lets add 1 to the owners totalHoldings
+  // const addToOwnersTotalHoldings = await Owner.findByIdAndUpdate(
+  //   ownerId,
+  //   { ...owner, totalHoldings: owner.totalHoldings + 1 },
+  //   { new: true }
+  // );
+  if (newLandHolding) {
+    res.status(200).json({
+      message: "Successfully created a new land holding",
+      data: newLandHolding,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Something went wrong creating a land holding");
   }
 });
 
