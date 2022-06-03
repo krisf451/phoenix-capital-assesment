@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const landHoldingSchema = mongoose.Schema(
   {
+    name: { type: String, required: true },
     owner: { type: String, required: true },
     legalEntity: { type: String, required: true },
     netMineralAcres: { type: String, required: true },
