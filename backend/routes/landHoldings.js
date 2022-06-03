@@ -14,6 +14,7 @@ router
   .route("/")
   .get(auth, getAllLandHoldings)
   .post(auth, validateLandHolding, createLandHolding);
+
 router
   .route("/:id")
   .get(auth, getLandHoldingById)

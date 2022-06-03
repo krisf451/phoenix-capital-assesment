@@ -59,6 +59,9 @@ const createLandHolding = asyncHandler(async (req, res) => {
     throw new Error(`No owner found with that name`);
   }
 
+  const sectionName = `${section}-${township}-${range}`;
+  const name = `${sectionName}-${legalEntity}`;
+
   const newLandHolding = await LandHolding.create({
     name: name,
     owner: ownerName,

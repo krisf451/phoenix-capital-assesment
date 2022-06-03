@@ -1,5 +1,6 @@
 const Owner = require("../models/owner.js");
 const LandHolding = require("../models/landHolding.js");
+
 const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
 
@@ -89,6 +90,7 @@ const deleteOwner = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     throw new Error(`No owner with ID ${req.params.id} found`);
   }
+
   const deletedOwner = await Owner.findByIdAndDelete(req.params.id);
   const numberOfDeletedHoldings = await LandHolding.deleteMany({
     owner: deletedOwner.name,
@@ -97,6 +99,11 @@ const deleteOwner = asyncHandler(async (req, res) => {
     res.status(200).json({
       message: `Successfully deleted Owner with ID ${req.params.id}`,
       deletedHoldings: numberOfDeletedHoldings,
+
+  const isDeleted = await Owner.findByIdAndDelete(req.params.id);
+  if (isDeleted) {
+    res.status(200).json({
+      message: `Successfully deleted Owner with ID ${req.params.id}`,
     });
   } else {
     res.status(400);
