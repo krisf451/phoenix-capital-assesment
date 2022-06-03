@@ -1,18 +1,24 @@
 import React, { useState } from "react";
+import { createLandHoldings } from "../api";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
+const initalValues = {
+  ownerName: "",
+  legalEntity: "",
+  netMineralAcres: "",
+  royaltyPercentage: "",
+  section: "",
+  township: "",
+  range: "",
+  titleSource: "",
+};
 
 const CreateLandHolding = () => {
-  const [formValues, setFormValues] = useState({
-    owner: "",
-    legalEntity: "",
-    netMineralAcres: "",
-    royaltyPercentage: "",
-    section: "",
-    township: "",
-    range: "",
-    titleSource: "",
-  });
+  const [formValues, setFormValues] = useState(initalValues);
+  const navigate = useNavigate();
   const {
-    owner,
+    ownerName,
     legalEntity,
     netMineralAcres,
     royaltyPercentage,
@@ -27,19 +33,36 @@ const CreateLandHolding = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { data } = await createLandHoldings(formValues);
+    console.log(data);
+    if (data?.name) {
+      setFormValues(initalValues);
+      navigate("/landHoldings");
+      toast.success("Successfully Created A Land Holding!!");
+    } else {
+      toast.error("Error Creating Land Holding!!");
+    }
+  };
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center bg-gray-200 dark:text-white dark:bg-main-dark-bg">
+    <div className="h-screen w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
       <h1 className="mb-4 text-2xl font-extrabold">Add Land Holding</h1>
-      <form className="flex flex-col bg-white justify-center items-center w-[350px] p-2 rounded-md dark:bg-secondary-dark-bg">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col bg-gray-200 justify-center items-center w-[350px] p-2 rounded-md dark:bg-secondary-dark-bg"
+      >
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Owner
         </label>
         <input
           type="text"
-          value={owner}
-          name="owner"
+          value={ownerName}
+          name="ownerName"
+          required
+          placeholder="Owner's Name"
           onChange={handleChange}
-          className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
+          className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-2"
         />
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Legal Entity
@@ -48,8 +71,9 @@ const CreateLandHolding = () => {
           type="text"
           value={legalEntity}
           name="legalEntity"
+          placeholder="Legal Entity"
           onChange={handleChange}
-          className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
+          className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-2"
         />
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Net Acres
@@ -58,8 +82,9 @@ const CreateLandHolding = () => {
           type="text"
           value={netMineralAcres}
           name="netMineralAcres"
+          placeholder="Net Mineral Acres"
           onChange={handleChange}
-          className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
+          className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-2"
         />
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Royalty %
@@ -68,8 +93,9 @@ const CreateLandHolding = () => {
           type="text"
           value={royaltyPercentage}
           name="royaltyPercentage"
+          placeholder="Royalty Percentage"
           onChange={handleChange}
-          className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
+          className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-2"
         />
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Section
@@ -78,8 +104,10 @@ const CreateLandHolding = () => {
           type="text"
           value={section}
           name="section"
+          placeholder="3 Numbers"
+          required
           onChange={handleChange}
-          className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
+          className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-2"
         />
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Township
@@ -88,8 +116,10 @@ const CreateLandHolding = () => {
           type="text"
           value={township}
           name="township"
+          placeholder="3 Numbers Ending with N or S"
+          required
           onChange={handleChange}
-          className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
+          className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-2"
         />
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Range
@@ -98,8 +128,9 @@ const CreateLandHolding = () => {
           type="text"
           value={range}
           name="range"
+          placeholder="3 Numbers Ending with W or E"
           onChange={handleChange}
-          className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
+          className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-2"
         />
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Title Source
@@ -108,32 +139,27 @@ const CreateLandHolding = () => {
           type="text"
           value={titleSource}
           name="titleSource"
+          placeholder="Class A/B/C/D"
+          required
           onChange={handleChange}
-          className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
+          className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
         />
+        <button
+          type="submit"
+          className="bg-blue-400 text-white h-8 w-3/4 rounded-md transition-all hover:bg-blue-500 duration-300 ease-in-out mt-4 flex justify-center items-center"
+        >
+          Submit
+        </button>
+        <button
+          type="button"
+          onClick={() => setFormValues(initalValues)}
+          className="bg-blue-400 text-white h-8 w-3/4 rounded-md transition-all hover:bg-blue-500 duration-300 ease-in-out mt-4 flex justify-center items-center mb-4"
+        >
+          Clear
+        </button>
       </form>
     </div>
   );
 };
 
 export default CreateLandHolding;
-
-// {
-//     "message": "Successfully created a new land holding",
-//     "data": {
-//         "name": "373-211S-643W-test",
-//         "owner": "Brooks Brothers",
-//         "legalEntity": "test",
-//         "netMineralAcres": "465.55",
-//         "royaltyPercentage": "0.9%",
-//         "sectionName": "373-211S-643W",
-//         "section": "373",
-//         "township": "211S",
-//         "range": "643W",
-//         "titleSource": "class a",
-//         "_id": "629a6ff6c8fa8c1162cb95bd",
-//         "createdAt": "2022-06-03T20:32:54.800Z",
-//         "updatedAt": "2022-06-03T20:32:54.800Z",
-//         "__v": 0
-//     }
-// }
