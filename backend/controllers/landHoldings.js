@@ -50,9 +50,6 @@ const createLandHolding = asyncHandler(async (req, res) => {
   //saving time here so we dont have to do this during our call
   const lowerTitleSource = titleSource.toLowerCase();
 
-  const sectionName = `${section}-${township}-${range}`;
-  const name = `${sectionName}-${legalEntity}`;
-
   //check if the owner is a valid owner
   const [owner] = await Owner.find({ name: ownerName });
   if (!owner) {
