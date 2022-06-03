@@ -91,7 +91,7 @@ const deleteOwner = asyncHandler(async (req, res) => {
   }
   const deletedOwner = await Owner.findByIdAndDelete(req.params.id);
   const numberOfDeletedHoldings = await LandHolding.deleteMany({
-    name: deletedOwner.name,
+    owner: deletedOwner.name,
   });
   if (deletedOwner) {
     res.status(200).json({

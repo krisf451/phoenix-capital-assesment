@@ -8,12 +8,16 @@ const {
   updateLandHolding,
 } = require("../controllers/landHoldings.js");
 const auth = require("../middleware/auth.js");
+const validateLandHolding = require("../middleware/validateLandHolding.js");
 
-router.route("/").get(auth, getAllLandHoldings).post(auth, createLandHolding);
+router
+  .route("/")
+  .get(auth, getAllLandHoldings)
+  .post(auth, validateLandHolding, createLandHolding);
 router
   .route("/:id")
   .get(auth, getLandHoldingById)
   .delete(auth, deleteLandHolding)
-  .put(auth, updateLandHolding);
+  .put(auth, validateLandHolding, updateLandHolding);
 
 module.exports = router;
