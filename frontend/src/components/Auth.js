@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { signin, signup } from "../api";
 import { useStateContext } from "../context/StateContext";
+import { useNavigate } from "react-router-dom";
 import buttonSpinner from "../assets/button-spinner.svg";
 
 const Auth = () => {
-  const { isLoading, setIsLoading } = useStateContext();
-  const [hasAccount, setHasAccount] = useState(false);
+  const { isLoading, setIsLoading, setAuthData } = useStateContext();
+  const navigate = useNavigate();
+  const [hasAccount, setHasAccount] = useState(true);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -14,14 +16,26 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    localStorage.removeItem("user");
 
     if (hasAccount) {
       signin(formValues)
-        .then((res) => console.log(res))
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res?.data));
+          setAuthData(JSON.parse(localStorage.getItem("user")));
+          navigate("/");
+          setIsLoading(false);
+        })
         .catch((e) => console.log(e));
     } else {
       signup(formValues)
-        .then((res) => console.log(res))
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res?.data));
+          setAuthData(JSON.parse(localStorage.getItem("user")));
+          navigate("/");
+          setIsLoading(false);
+        })
         .catch((e) => console.log(e));
     }
     clear();
@@ -56,6 +70,7 @@ const Auth = () => {
           <input
             type="email"
             name="email"
+            required
             className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
             value={email}
             onChange={handleChange}
@@ -66,6 +81,7 @@ const Auth = () => {
           <input
             type="password"
             name="password"
+            required
             className="h-12 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
             value={password}
             onChange={handleChange}

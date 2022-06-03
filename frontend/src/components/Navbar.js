@@ -4,7 +4,11 @@ import { HiOutlineLightBulb, HiMoon } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { mode, setMode } = useStateContext();
+  const { mode, setMode, authData, setAuthData } = useStateContext();
+  const logout = () => {
+    localStorage.clear();
+    setAuthData(null);
+  };
   return (
     <div className="dark:bg-black bg-gray-200 h-16 w-full flex justify-between items-center">
       {/* Logo */}
@@ -37,12 +41,22 @@ const Navbar = () => {
         >
           Owners
         </Link>
-        <Link
-          to="/auth"
-          className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
-        >
-          Login
-        </Link>
+        {authData === null ? (
+          <Link
+            to="/auth"
+            className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
+          >
+            Login
+          </Link>
+        ) : (
+          <Link
+            onClick={logout}
+            to="/auth"
+            className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
+          >
+            Logout
+          </Link>
+        )}
       </div>
       {/* Theme Stuff */}
       <div

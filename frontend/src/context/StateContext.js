@@ -1,9 +1,9 @@
 import React, { createContext, useState, useContext } from "react";
 
 const Context = createContext();
+let user = JSON.parse(localStorage.getItem("user"));
 
 export const StateContext = ({ children }) => {
-  let user = JSON.parse(localStorage.getItem("user"));
   const [mode, setMode] = useState("Dark");
   const [authData, setAuthData] = useState(user ? user : null);
   const [isLoading, setIsLoading] = useState(false);
