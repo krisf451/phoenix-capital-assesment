@@ -42,8 +42,9 @@ const createOwner = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Please provide all fields");
   }
+
   const newOwner = await Owner.create({
-    name,
+    name: name.toLowerCase(),
     entityType: entityType.toLowerCase(),
     ownerType: ownerType.toLowerCase(),
     address,

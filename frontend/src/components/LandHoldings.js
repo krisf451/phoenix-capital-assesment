@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useStateContext } from "../context/StateContext";
 import { fetchAllLandHoldings } from "../api";
 import { Loader, LandHolding } from "../components";
@@ -27,14 +28,24 @@ const LandHoldings = () => {
   };
 
   return (
-    <div className="h-screen w-full flex bg-main-bg dark:bg-main-dark-bg dark:text-white">
+    <div className="h-screen w-full flex bg-main-bg dark:bg-main-dark-bg">
       {isLoading ? (
         <Loader color="blue" />
       ) : (
-        <div className="">
-          {landHoldings?.map((landHolding, i) => (
-            <LandHolding key={i} landHolding={landHolding} />
-          ))}
+        <div className="flex flex-col items-center">
+          <Link
+            to="/landHoldings/add"
+            className="mt-4 bg-blue-500 h-10 text-white p-4 rounded-md flex items-center"
+          >
+            Create New Land Holding
+          </Link>
+          <div className="flex flex-wrap gap-6 justify-center w-full mt-4">
+            {landHoldings?.map((landHolding, i) => (
+              <Link to={`/landHoldings/${landHolding._id}`}>
+                <LandHolding key={i} landHolding={landHolding} />
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </div>

@@ -49,9 +49,10 @@ const createLandHolding = asyncHandler(async (req, res) => {
 
   //saving time here so we dont have to do this during our call
   const lowerTitleSource = titleSource.toLowerCase();
+  const lowerOwnerName = ownerName.toLowerCase();
 
   //check if the owner is a valid owner
-  const [owner] = await Owner.find({ name: ownerName });
+  const [owner] = await Owner.find({ name: lowerOwnerName });
   if (!owner) {
     throw new Error(`No owner found with that name`);
   }
@@ -61,7 +62,7 @@ const createLandHolding = asyncHandler(async (req, res) => {
 
   const newLandHolding = await LandHolding.create({
     name: name,
-    owner: ownerName,
+    owner: lowerOwnerName,
     legalEntity,
     netMineralAcres,
     royaltyPercentage,

@@ -10,16 +10,13 @@ import {
   LandHoldings,
   PrivateRoute,
   Profile,
+  CreateLandHolding,
 } from "./components";
 
 const App = () => {
   const { mode, authData } = useStateContext();
   return (
-    <div
-      className={`min-h-screen max-w-7xl mx-auto w-full border border-black ${
-        mode === "Dark" ? "dark" : ""
-      }`}
-    >
+    <div className={`min-h-screen w-full ${mode === "Dark" ? "dark" : ""}`}>
       <Toaster />
       <Navbar />
       <Routes>
@@ -31,6 +28,10 @@ const App = () => {
         <Route
           path="/landHoldings"
           element={<PrivateRoute component={LandHoldings} />}
+        />
+        <Route
+          path="/landHoldings/add"
+          element={<PrivateRoute component={CreateLandHolding} />}
         />
         <Route path="/owners" element={<PrivateRoute component={Owners} />} />
         <Route path="/profile" element={<PrivateRoute component={Profile} />} />

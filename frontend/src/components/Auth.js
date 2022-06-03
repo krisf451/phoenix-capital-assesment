@@ -29,7 +29,10 @@ const Auth = () => {
           toast.success("Signed in Successfully!");
           setIsLoading(false);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+          toast.error(`Signed in Error!`);
+          setIsLoading(false);
+        });
     } else {
       signup(formValues)
         .then((res) => {
@@ -39,7 +42,10 @@ const Auth = () => {
           toast.success("Signed up Successfully!");
           setIsLoading(false);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+          toast.error(`Signed up Error!`);
+          setIsLoading(false);
+        });
     }
     clear();
   };
