@@ -28,7 +28,7 @@ const LandHoldings = () => {
   };
 
   return (
-    <div className="max-h-screen w-full flex bg-main-bg dark:bg-main-dark-bg overflow-scroll scrollbar-hide">
+    <div className="min-h-screen w-full flex bg-main-bg dark:bg-main-dark-bg overflow-scroll scrollbar-hide justify-center">
       {isLoading ? (
         <Loader color="blue" />
       ) : (
@@ -41,9 +41,7 @@ const LandHoldings = () => {
           </Link>
           <div className="flex flex-wrap gap-6 justify-center w-full mt-4">
             {landHoldings?.map((landHolding, i) => (
-              <Link to={`/landHoldings/${landHolding._id}`} key={i}>
-                <LandHolding landHolding={landHolding} />
-              </Link>
+              <LandHolding landHolding={landHolding} key={i} />
             ))}
           </div>
         </div>
