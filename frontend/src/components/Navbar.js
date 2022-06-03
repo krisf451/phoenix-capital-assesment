@@ -46,13 +46,19 @@ const Navbar = () => {
       </div>
       {/* Theme Stuff */}
       <div
-        className="dark:text-white mx-6"
+        className="dark:text-white mx-6 cursor-pointer"
         onClick={() => setMode(mode === "Dark" ? "" : "Dark")}
       >
         {mode === "Dark" ? (
-          <HiOutlineLightBulb size={50} />
+          <HiOutlineLightBulb
+            size={35}
+            className="transition-all transform duration-500 ease-in-out hover:scale-125 opacity-80 hover:opacity-100"
+          />
         ) : (
-          <HiMoon size={50} />
+          <HiMoon
+            size={35}
+            className="transition-all transform duration-500 ease-in-out hover:scale-125 opacity-80 hover:opacity-100"
+          />
         )}
       </div>
     </div>
