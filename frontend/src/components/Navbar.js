@@ -58,6 +58,14 @@ const Navbar = () => {
           </Link>
         )}
       </div>
+      {/* User stuff */}
+      {authData !== null && (
+        <Link to="/profile">
+          <div className="rounded-full h-10 w-10 bg-gray-400 dark:bg-main-bg flex justify-center items-center cursor-pointer">
+            {authData.email[0].toUpperCase()}
+          </div>
+        </Link>
+      )}
       {/* Theme Stuff */}
       <div
         className="dark:text-white mx-6 cursor-pointer"

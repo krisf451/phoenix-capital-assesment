@@ -9,6 +9,7 @@ import {
   Owners,
   LandHoldings,
   PrivateRoute,
+  Profile,
 } from "./components";
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
           element={<PrivateRoute component={LandHoldings} />}
         />
         <Route path="/owners" element={<PrivateRoute component={Owners} />} />
+        <Route path="/profile" element={<PrivateRoute component={Profile} />} />
       </Routes>
     </div>
   );
