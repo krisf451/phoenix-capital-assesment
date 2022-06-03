@@ -1,11 +1,11 @@
 import React from "react";
 
-const Owners = () => {
+const Home = () => {
   return (
     <div className="h-screen w-full flex bg-main-bg dark:bg-main-dark-bg dark:text-white">
-      Owners
+      Home
     </div>
   );
 };
 
-export default Owners;
+export default Home;
