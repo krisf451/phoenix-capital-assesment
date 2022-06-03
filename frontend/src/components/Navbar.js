@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const { mode, setMode } = useStateContext();
   return (
-    <div className="dark:bg-black bg-gray-200 h-16 mb-4 w-full flex justify-between items-center fixed top-0 left-0">
+    <div className="dark:bg-black bg-gray-200 h-16 w-full flex justify-between items-center">
       {/* Logo */}
       <Link
         to="/"
@@ -20,10 +20,10 @@ const Navbar = () => {
       {/* Links */}
       <div className="flex flex-1 justify-around ml-6 text-sm transition-all">
         <Link
-          to="/admin"
-          className="dark:text-white transform duration-300 ease-in-out hover:text-blue-500 hover:dark:text-gray-400"
+          to="/"
+          className="uppercase dark:text-white transform duration-300 ease-in-out hover:text-blue-500 hover:dark:text-gray-400"
         >
-          DASHBOARD
+          Home
         </Link>
         <Link
           to="/landHoldings"
@@ -36,6 +36,12 @@ const Navbar = () => {
           className="uppercase dark:text-white transform duration-300 ease-in-out hover:text-blue-500 hover:dark:text-gray-400"
         >
           Owners
+        </Link>
+        <Link
+          to="/auth"
+          className="uppercase dark:text-white transform duration-300 ease-in-out hover:text-blue-500 hover:dark:text-gray-400"
+        >
+          Login
         </Link>
       </div>
       {/* Theme Stuff */}
