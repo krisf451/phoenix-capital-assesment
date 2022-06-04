@@ -13,6 +13,7 @@ import {
   CreateLandHolding,
   EditLandHolding,
   CreateOwner,
+  EditOwner,
 } from "./components";
 
 const App = () => {
@@ -36,13 +37,17 @@ const App = () => {
           element={<PrivateRoute component={CreateLandHolding} />}
         />
         <Route
-          path="/landHoldings/:id"
+          path="/landHoldings/:id/edit"
           element={<PrivateRoute component={EditLandHolding} />}
         />
         <Route path="/owners" element={<PrivateRoute component={Owners} />} />
         <Route
           path="/owners/add"
           element={<PrivateRoute component={CreateOwner} />}
+        />
+        <Route
+          path="/owners/:id/edit"
+          element={<PrivateRoute component={EditOwner} />}
         />
         <Route path="/profile" element={<PrivateRoute component={Profile} />} />
       </Routes>

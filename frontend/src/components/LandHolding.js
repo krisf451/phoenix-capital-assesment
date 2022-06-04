@@ -38,7 +38,7 @@ const LandHolding = ({ landHolding }) => {
       </div>
       {/* Edit/Delete Icons */}
       <div className="flex w-full justify-between items-center">
-        <Link to={`/landHoldings/${landHolding?._id}`}>
+        <Link to={`/landHoldings/${landHolding?._id}/edit`}>
           <AiFillEdit size={25} />
         </Link>
 

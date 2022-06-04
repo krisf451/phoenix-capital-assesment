@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { createOwner } from "../api";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { fetchOwnerById, updateOwner } from "../api";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const initalValues = {
@@ -10,8 +10,9 @@ const initalValues = {
   address: "",
 };
 
-const CreateOwner = () => {
+const EditOwner = () => {
   const [formValues, setFormValues] = useState(initalValues);
+  const { id } = useParams();
   const navigate = useNavigate();
   const { name, entityType, ownerType, address } = formValues;
 
@@ -26,19 +27,35 @@ const CreateOwner = () => {
     e.preventDefault();
     const {
       data: { data },
-    } = await createOwner(formValues);
-    console.log(data);
+    } = await updateOwner(id, formValues);
     if (data?.name) {
       setFormValues(initalValues);
       navigate("/owners");
-      toast.success("Successfully Created A New Owner!!");
+      toast.success("Successfully Updated Owner!!");
     } else {
-      toast.error("Error Creating an Owner!!");
+      toast.error("Error Updating an Owner!!");
     }
   };
+
+  useEffect(() => {
+    asyncFetchOwnerById(id);
+  }, []);
+
+  const asyncFetchOwnerById = async (id) => {
+    const {
+      data: { data },
+    } = await fetchOwnerById(id);
+    setFormValues({
+      name: data?.name,
+      entityType: data?.entityType,
+      ownerType: data?.ownerType,
+      address: data?.address,
+    });
+  };
+
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
-      <h1 className="mb-4 text-2xl font-extrabold">Add Owner</h1>
+      <h1 className="mb-4 text-2xl font-extrabold">Edit Owner</h1>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col bg-gray-200 justify-center items-center w-[350px] p-2 rounded-md dark:bg-secondary-dark-bg"
@@ -114,4 +131,4 @@ const CreateOwner = () => {
   );
 };
 
-export default CreateOwner;
+export default EditOwner;
