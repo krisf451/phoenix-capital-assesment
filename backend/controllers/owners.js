@@ -10,6 +10,7 @@ const getAllOwners = asyncHandler(async (req, res) => {
   if (owners) {
     res.status(200).json({
       message: "Get all owners successful",
+      ammountOfOwners: owners.length,
       data: owners,
     });
   } else {
@@ -96,11 +97,10 @@ const deleteOwner = asyncHandler(async (req, res) => {
   const numberOfDeletedHoldings = await LandHolding.deleteMany({
     owner: deletedOwner.name,
   });
-
   if (deletedOwner) {
     res.status(200).json({
       message: `Successfully deleted Owner with ID ${req.params.id}`,
-      deletedHoldings: numberOfDeletedHoldings,
+      deletedHoldings: numberOfDeletedHoldings?.deletedCount,
     });
   } else {
     res.status(400);

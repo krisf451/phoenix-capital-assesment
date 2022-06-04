@@ -9,6 +9,7 @@ const getAllLandHoldings = asyncHandler(async (req, res) => {
   if (landHoldings) {
     res.status(200).json({
       message: "Succesfully fetched all land holdings!",
+      ammountOfHoldings: landHoldings.length,
       data: landHoldings,
     });
   } else {
