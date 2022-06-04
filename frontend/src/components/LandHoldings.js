@@ -23,6 +23,7 @@ const LandHoldings = () => {
       setLandHoldings(data);
       setIsLoading(false);
     } else {
+      setIsLoading(false);
       toast.error("Error Fetching Land Holdings...");
     }
   };

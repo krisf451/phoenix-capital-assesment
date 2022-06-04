@@ -4,9 +4,9 @@ const landHoldingSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     owner: { type: String, required: true },
-    legalEntity: { type: String, required: true },
-    netMineralAcres: { type: String, required: true },
-    royaltyPercentage: { type: String, required: true },
+    legalEntity: { type: String },
+    netMineralAcres: { type: String },
+    royaltyPercentage: { type: String },
     sectionName: { type: String, required: true },
     section: { type: String, required: true },
     township: { type: String, required: true },

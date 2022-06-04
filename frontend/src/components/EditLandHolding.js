@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { createLandHoldings } from "../api";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { fetchLandHoldingById, updateLandHolding } from "../api";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const initalValues = {
@@ -14,9 +14,10 @@ const initalValues = {
   titleSource: "",
 };
 
-const CreateLandHolding = () => {
+const EditLandHolding = () => {
   const [formValues, setFormValues] = useState(initalValues);
   const navigate = useNavigate();
+  const { id } = useParams();
   const {
     ownerName,
     legalEntity,
@@ -39,18 +40,39 @@ const CreateLandHolding = () => {
     e.preventDefault();
     const {
       data: { data },
-    } = await createLandHoldings(formValues);
+    } = await updateLandHolding(id, formValues);
     if (data?.name) {
       setFormValues(initalValues);
+      toast.success("Successfully Updated A Land Holding!!");
       navigate("/landHoldings");
-      toast.success("Successfully Created A Land Holding!!");
     } else {
-      toast.error("Error Creating Land Holding!!");
+      toast.error("Error Updating Land Holding!!");
     }
   };
+
+  useEffect(() => {
+    asyncFetchLandHoldingById(id);
+  }, []);
+
+  const asyncFetchLandHoldingById = async (id) => {
+    const {
+      data: { data },
+    } = await fetchLandHoldingById(id);
+    setFormValues({
+      ownerName: data?.owner,
+      legalEntity: data?.legalEntity,
+      netMineralAcres: data?.netMineralAcres,
+      royaltyPercentage: data?.royaltyPercentage,
+      section: data?.section,
+      township: data?.township,
+      range: data?.range,
+      titleSource: data?.titleSource,
+    });
+  };
+
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
-      <h1 className="mb-4 text-2xl font-extrabold">Add Land Holding</h1>
+      <h1 className="mb-4 text-2xl font-extrabold">Edit Land Holding</h1>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col bg-gray-200 justify-center items-center w-[350px] p-2 rounded-md dark:bg-secondary-dark-bg"
@@ -165,4 +187,4 @@ const CreateLandHolding = () => {
   );
 };
 
-export default CreateLandHolding;
+export default EditLandHolding;

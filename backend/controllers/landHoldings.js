@@ -47,9 +47,9 @@ const createLandHolding = asyncHandler(async (req, res) => {
     titleSource,
   } = req.body;
 
-  //saving time here so we dont have to do this during our call
-  const lowerTitleSource = titleSource.toLowerCase();
   const lowerOwnerName = ownerName.toLowerCase();
+  const upperTownship = township.toUpperCase();
+  const upperRange = range.toUpperCase();
 
   //check if the owner is a valid owner
   const [owner] = await Owner.find({ name: lowerOwnerName });
@@ -57,7 +57,7 @@ const createLandHolding = asyncHandler(async (req, res) => {
     throw new Error(`No owner found with that name`);
   }
 
-  const sectionName = `${section}-${township}-${range}`;
+  const sectionName = `${section}-${upperTownship}-${upperRange}`;
   const name = `${sectionName}-${legalEntity}`;
 
   const newLandHolding = await LandHolding.create({
@@ -68,9 +68,9 @@ const createLandHolding = asyncHandler(async (req, res) => {
     royaltyPercentage,
     sectionName: sectionName,
     section,
-    township,
-    range,
-    titleSource: lowerTitleSource,
+    township: upperTownship,
+    range: upperRange,
+    titleSource: titleSource.toLowerCase(),
   });
   await newLandHolding.save();
 
@@ -96,15 +96,48 @@ const updateLandHolding = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     throw new Error(`No owner with ID ${req.params.id} found`);
   }
-  const landHolding = req.body;
+  const {
+    ownerName,
+    legalEntity,
+    netMineralAcres,
+    royaltyPercentage,
+    section,
+    township,
+    range,
+    titleSource,
+  } = req.body;
+
+  const lowerOwnerName = ownerName.toLowerCase();
+  const upperTownship = township.toUpperCase();
+  const upperRange = range.toUpperCase();
+
+  //check if the owner is a valid owner
+  const [owner] = await Owner.find({ name: lowerOwnerName });
+  if (!owner) {
+    throw new Error(`No owner found with that name`);
+  }
+
+  const sectionName = `${section}-${upperTownship}-${upperRange}`;
+  const name = `${sectionName}-${legalEntity}`;
 
   const updatedLandHolding = await LandHolding.findByIdAndUpdate(
     req.params.id,
-    landHolding,
+    {
+      name: name,
+      owner: lowerOwnerName,
+      legalEntity,
+      netMineralAcres,
+      royaltyPercentage,
+      sectionName: sectionName,
+      section,
+      township: upperTownship,
+      range: upperRange,
+      titleSource: titleSource.toLowerCase(),
+    },
     { new: true }
   );
 
-  if (updateLandHolding) {
+  if (updatedLandHolding) {
     res.status(200).json({
       message: `Succesfully updated landholding with id ${req.params.id}`,
       data: updatedLandHolding,

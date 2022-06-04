@@ -3,7 +3,7 @@ import { ThreeDots } from "react-loader-spinner";
 
 const Loader = ({ color }) => {
   return (
-    <div className="h-screen w-full flex justify-center items-center">
+    <div className="h-72 w-full flex justify-center items-center">
       <ThreeDots ariaLabel="loading-indicator" color={color} />
     </div>
   );
