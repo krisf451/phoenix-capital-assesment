@@ -10,6 +10,7 @@ const getAllOwners = asyncHandler(async (req, res) => {
   if (owners) {
     res.status(200).json({
       message: "Get all owners successful",
+      ammountOfOwners: owners.length,
       data: owners,
     });
   } else {
@@ -42,8 +43,9 @@ const createOwner = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Please provide all fields");
   }
+
   const newOwner = await Owner.create({
-    name,
+    name: name.toLowerCase(),
     entityType: entityType.toLowerCase(),
     ownerType: ownerType.toLowerCase(),
     address,
@@ -67,11 +69,20 @@ const updateOwner = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     throw new Error(`No owner with ID ${_id} found`);
   }
-  const owner = req.body;
+  const body = req.body;
+  const owner = await Owner.findById(_id);
+
+  if (req.body.name !== owner?.name) {
+    await LandHolding.updateMany(
+      { owner: owner?.name },
+      { owner: req.body.name },
+      { new: true }
+    );
+  }
 
   const updatedOwner = await Owner.findByIdAndUpdate(
     _id,
-    { ...owner, _id },
+    { ...body, _id },
     { new: true }
   );
 
@@ -95,11 +106,10 @@ const deleteOwner = asyncHandler(async (req, res) => {
   const numberOfDeletedHoldings = await LandHolding.deleteMany({
     owner: deletedOwner.name,
   });
-
   if (deletedOwner) {
     res.status(200).json({
       message: `Successfully deleted Owner with ID ${req.params.id}`,
-      deletedHoldings: numberOfDeletedHoldings,
+      deletedHoldings: numberOfDeletedHoldings?.deletedCount,
     });
   } else {
     res.status(400);

@@ -1,6 +1,13 @@
 export { default as Navbar } from "./Navbar";
-export { default as Home } from "./Home";
 export { default as Auth } from "./Auth";
 export { default as LandHoldings } from "./LandHoldings";
+export { default as LandHolding } from "./LandHolding";
+export { default as CreateLandHolding } from "./CreateLandHolding";
+export { default as EditLandHolding } from "./EditLandHolding";
 export { default as Owners } from "./Owners";
+export { default as Owner } from "./Owner";
+export { default as CreateOwner } from "./CreateOwner";
+export { default as EditOwner } from "./EditOwner";
 export { default as PrivateRoute } from "./PrivateRoute";
+export { default as Loader } from "./Loader";
+export { default as Profile } from "./Profile";

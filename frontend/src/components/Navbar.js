@@ -22,25 +22,27 @@ const Navbar = () => {
         </p>
       </Link>
       {/* Links */}
-      <div className="flex flex-1 justify-around ml-6 text-sm transition-all">
-        <Link
-          to="/"
-          className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
-        >
-          Home
-        </Link>
-        <Link
-          to="/landHoldings"
-          className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
-        >
-          Land Holdings
-        </Link>
-        <Link
-          to="/owners"
-          className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
-        >
-          Owners
-        </Link>
+      <div
+        className={`flex flex-1 ml-6 text-sm transition-all ${
+          authData === null ? "justify-end" : "justify-around"
+        }`}
+      >
+        {authData !== null && (
+          <>
+            <Link
+              to="/landHoldings"
+              className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
+            >
+              Land Holdings
+            </Link>
+            <Link
+              to="/owners"
+              className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
+            >
+              Owners
+            </Link>
+          </>
+        )}
         {authData === null ? (
           <Link
             to="/auth"
@@ -58,6 +60,14 @@ const Navbar = () => {
           </Link>
         )}
       </div>
+      {/* User stuff */}
+      {authData !== null && (
+        <Link to="/profile">
+          <div className="rounded-full h-10 w-10 bg-gray-400 dark:bg-main-bg flex justify-center items-center cursor-pointer">
+            {authData.email[0].toUpperCase()}
+          </div>
+        </Link>
+      )}
       {/* Theme Stuff */}
       <div
         className="dark:text-white mx-6 cursor-pointer"

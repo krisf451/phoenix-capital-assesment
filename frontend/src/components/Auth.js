@@ -3,6 +3,7 @@ import { signin, signup } from "../api";
 import { useStateContext } from "../context/StateContext";
 import { useNavigate } from "react-router-dom";
 import buttonSpinner from "../assets/button-spinner.svg";
+import toast from "react-hot-toast";
 
 const Auth = () => {
   const { isLoading, setIsLoading, setAuthData } = useStateContext();
@@ -25,18 +26,26 @@ const Auth = () => {
           localStorage.setItem("user", JSON.stringify(res?.data));
           setAuthData(JSON.parse(localStorage.getItem("user")));
           navigate("/");
+          toast.success("Signed in Successfully!");
           setIsLoading(false);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+          toast.error(`Signed in Error!`);
+          setIsLoading(false);
+        });
     } else {
       signup(formValues)
         .then((res) => {
           localStorage.setItem("user", JSON.stringify(res?.data));
           setAuthData(JSON.parse(localStorage.getItem("user")));
           navigate("/");
+          toast.success("Signed up Successfully!");
           setIsLoading(false);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+          toast.error(`Signed up Error!`);
+          setIsLoading(false);
+        });
     }
     clear();
   };
