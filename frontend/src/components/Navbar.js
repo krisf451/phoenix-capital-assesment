@@ -13,7 +13,7 @@ const Navbar = () => {
     <div className="dark:bg-black bg-gray-200 h-16 w-full flex justify-between items-center">
       {/* Logo */}
       <Link
-        to="/"
+        to="/landHoldings"
         className="mx-6 transition-all cursor-pointer transform duration-500 hover:translate-x-0.5 ease-linear"
       >
         <p className="text-gray-600 dark:text-gray-400">
