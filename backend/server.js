@@ -25,6 +25,10 @@ app.get("/api/v1", (req, res) => {
   res.json({ message: "Sanity Check Passed" });
 });
 
+app.get("/", (req, res) => {
+  res.json({ message: "DEPLOYED SUCCESSFUL" });
+});
+
 app.use(errorHandler);
 
 mongoose
