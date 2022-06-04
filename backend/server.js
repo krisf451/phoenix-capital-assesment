@@ -26,7 +26,7 @@ app.get("/api/v1", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ message: "DEPLOYED SUCCESSFUL" });
+  res.json({ message: "DEPLOYED SUCCESSFUL Test" });
 });
 
 app.use(errorHandler);
