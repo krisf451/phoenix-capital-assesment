@@ -52,7 +52,7 @@ const EditLandHolding = () => {
 
   useEffect(() => {
     asyncFetchLandHoldingById(id);
-  }, []);
+  }, [id]);
 
   const asyncFetchLandHoldingById = async (id) => {
     const {

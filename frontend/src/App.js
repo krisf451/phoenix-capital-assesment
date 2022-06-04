@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useStateContext } from "./context/StateContext";
 import {
   Navbar,
-  Home,
   Auth,
   Owners,
   LandHoldings,
@@ -23,7 +22,7 @@ const App = () => {
       <Toaster />
       <Navbar />
       <Routes>
-        <Route path="/" element={<PrivateRoute component={Home} />} />
+        <Route path="/*" element={<PrivateRoute component={LandHoldings} />} />
         <Route
           path="/auth"
           element={authData === null ? <Auth /> : <Navigate to="/" replace />}

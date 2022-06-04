@@ -39,7 +39,7 @@ const EditOwner = () => {
 
   useEffect(() => {
     asyncFetchOwnerById(id);
-  }, []);
+  }, [id]);
 
   const asyncFetchOwnerById = async (id) => {
     const {

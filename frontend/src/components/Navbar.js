@@ -22,25 +22,27 @@ const Navbar = () => {
         </p>
       </Link>
       {/* Links */}
-      <div className="flex flex-1 justify-around ml-6 text-sm transition-all">
-        <Link
-          to="/"
-          className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
-        >
-          Home
-        </Link>
-        <Link
-          to="/landHoldings"
-          className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
-        >
-          Land Holdings
-        </Link>
-        <Link
-          to="/owners"
-          className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
-        >
-          Owners
-        </Link>
+      <div
+        className={`flex flex-1 ml-6 text-sm transition-all ${
+          authData === null ? "justify-end" : "justify-around"
+        }`}
+      >
+        {authData !== null && (
+          <>
+            <Link
+              to="/landHoldings"
+              className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
+            >
+              Land Holdings
+            </Link>
+            <Link
+              to="/owners"
+              className="uppercase dark:text-white transform duration-300 ease-in-out text-gray-500 hover:text-gray-700 hover:dark:text-gray-400"
+            >
+              Owners
+            </Link>
+          </>
+        )}
         {authData === null ? (
           <Link
             to="/auth"
