@@ -69,11 +69,20 @@ const updateOwner = asyncHandler(async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     throw new Error(`No owner with ID ${_id} found`);
   }
-  const owner = req.body;
+  const body = req.body;
+  const owner = await Owner.findById(_id);
+
+  if (req.body.name !== owner?.name) {
+    await LandHolding.updateMany(
+      { owner: owner?.name },
+      { owner: req.body.name },
+      { new: true }
+    );
+  }
 
   const updatedOwner = await Owner.findByIdAndUpdate(
     _id,
-    { ...owner, _id },
+    { ...body, _id },
     { new: true }
   );
 

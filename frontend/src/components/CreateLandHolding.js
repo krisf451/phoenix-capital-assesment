@@ -138,15 +138,19 @@ const CreateLandHolding = () => {
         <label className="text-gray-700 text-sm font-bold mb-2 dark:text-white">
           Title Source
         </label>
-        <input
-          type="text"
+        <select
           value={titleSource}
           name="titleSource"
-          placeholder="Class A/B/C/D"
-          required
           onChange={handleChange}
+          required
           className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-4"
-        />
+        >
+          <option value=""></option>
+          <option value="class a">Class A</option>
+          <option value="class b">Class B</option>
+          <option value="class c">Class C</option>
+          <option value="class d">Class D</option>
+        </select>
         <button
           type="submit"
           className="bg-blue-400 text-white h-8 w-3/4 rounded-md transition-all hover:bg-blue-500 duration-300 ease-in-out mt-4 flex justify-center items-center"
