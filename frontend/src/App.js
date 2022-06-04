@@ -12,6 +12,7 @@ import {
   Profile,
   CreateLandHolding,
   EditLandHolding,
+  CreateOwner,
 } from "./components";
 
 const App = () => {
@@ -39,6 +40,10 @@ const App = () => {
           element={<PrivateRoute component={EditLandHolding} />}
         />
         <Route path="/owners" element={<PrivateRoute component={Owners} />} />
+        <Route
+          path="/owners/add"
+          element={<PrivateRoute component={CreateOwner} />}
+        />
         <Route path="/profile" element={<PrivateRoute component={Profile} />} />
       </Routes>
     </div>

@@ -6,6 +6,8 @@ export { default as LandHolding } from "./LandHolding";
 export { default as CreateLandHolding } from "./CreateLandHolding";
 export { default as EditLandHolding } from "./EditLandHolding";
 export { default as Owners } from "./Owners";
+export { default as Owner } from "./Owner";
+export { default as CreateOwner } from "./CreateOwner";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as Loader } from "./Loader";
 export { default as Profile } from "./Profile";
