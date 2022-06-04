@@ -32,7 +32,7 @@ const LandHolding = ({ landHolding }) => {
         <p>Name: {landHolding.name}</p>
         <p>Legal Entity: {landHolding.legalEntity}</p>
         <p>NetAcres: {landHolding.netMineralAcres}</p>
-        <p>Title Source: {landHolding.titleSource.toUpperCase()}</p>
+        <p>Title Source: {landHolding.titleSource}</p>
         <p>Updated At: {landHolding.createdAt}</p>
         <p>Created At: {landHolding.updatedAt}</p>
       </div>

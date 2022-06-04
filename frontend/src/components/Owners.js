@@ -35,7 +35,7 @@ const Owners = () => {
         <div className="flex flex-col items-center">
           <Link
             to="/owners/add"
-            className="mt-4 bg-blue-500 h-10 text-white p-4 rounded-md flex items-center"
+            className="mt-4 bg-blue-500 h-10 text-white p-4 rounded-md flex items-center hover:bg-blue-700 transtion-all duration-300 ease-in-out"
           >
             Create New Owner
           </Link>
