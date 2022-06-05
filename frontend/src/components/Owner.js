@@ -5,6 +5,7 @@ import { AiFillEdit } from "react-icons/ai";
 import { deleteOwner } from "../api";
 import { useStateContext } from "../context/StateContext";
 import toast from "react-hot-toast";
+import moment from "moment";
 
 const Owner = ({ owner }) => {
   const { owners, setOwners } = useStateContext();
@@ -24,21 +25,56 @@ const Owner = ({ owner }) => {
   };
 
   return (
-    <div className="h-[300px] w-[300px] bg-gray-200 dark:bg-secondary-dark-bg dark:text-white rounded-md shadow-lg flex flex-col justify-between p-2 cursor-pointer">
+    <div className="h-[240px] w-full sm:w-[360px] bg-gray-100 dark:bg-secondary-dark-bg dark:text-white rounded-md shadow-lg flex flex-col items-center justify-between p-2">
       {/* LandHolding Info */}
-      <div className="flex flex-col justify-start items-start ">
-        <p>Name: {owner.name}</p>
-        <p>Entity Type: {owner.entityType}</p>
-        <p>Owner Type: {owner.ownerType}</p>
-        <p>Address: {owner.address}</p>
-        <p>Total Holdings: {owner.totalHoldings}</p>
+      <h2 className="opacity-80 hover:opacity-100 dark:text-white">
+        {owner.name.toUpperCase()}
+      </h2>
+      <div>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Entity Type:{" "}
+          <span className="text-gray-700 dark:text-white">
+            {owner.entityType}
+          </span>
+        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Owner Type:{" "}
+          <span className="text-gray-700 dark:text-white">
+            {owner.ownerType}
+          </span>
+        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Address:{" "}
+          <span className="text-gray-700 dark:text-white">{owner.address}</span>
+        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Total Holdings:{" "}
+          <span className="text-gray-700 dark:text-white">
+            {owner.totalHoldings}
+          </span>
+        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Created At:{" "}
+          <span className="text-gray-700 dark:text-white">
+            {moment(owner.createdAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format(
+              "YYYY-MM-DD HH:mm:ss"
+            )}
+          </span>
+        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Updated At:{" "}
+          <span className="text-gray-700 dark:text-white">
+            {moment(owner.updatedAt, moment.HTML5_FMT.DATETIME_LOCAL_MS).format(
+              "YYYY-MM-DD HH:mm:ss"
+            )}
+          </span>
+        </p>
       </div>
       {/* Edit/Delete Icons */}
-      <div className="flex w-full justify-between items-center">
+      <div className="flex w-full justify-between items-center mx-4">
         <Link to={`/owners/${owner?._id}/edit`}>
           <AiFillEdit size={25} />
         </Link>
-
         <BsTrash size={25} onClick={handleDelete} />
       </div>
     </div>

@@ -19,7 +19,6 @@ const Auth = () => {
     e.preventDefault();
     setIsLoading(true);
     localStorage.removeItem("user");
-
     if (hasAccount) {
       signin(formValues)
         .then((res) => {

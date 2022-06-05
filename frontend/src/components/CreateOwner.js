@@ -24,20 +24,22 @@ const CreateOwner = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      data: { data },
-    } = await createOwner(formValues);
-    console.log(data);
-    if (data?.name) {
-      setFormValues(initalValues);
-      navigate("/owners");
-      toast.success("Successfully Created A New Owner!!");
-    } else {
-      toast.error("Error Creating an Owner!!");
+    try {
+      const { data } = await createOwner(formValues);
+      if (data?.data?.name) {
+        setFormValues(initalValues);
+        navigate("/owners");
+        toast.success("Successfully Created A New Owner!!");
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error("Something went wrong");
     }
   };
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
       <h1 className="mb-4 text-2xl font-extrabold">Add Owner</h1>
       <form
         onSubmit={handleSubmit}
