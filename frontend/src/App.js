@@ -13,6 +13,7 @@ import {
   EditLandHolding,
   CreateOwner,
   EditOwner,
+  Home,
 } from "./components";
 
 const App = () => {
@@ -22,7 +23,7 @@ const App = () => {
       <Toaster />
       <Navbar />
       <Routes>
-        <Route path="/*" element={<PrivateRoute component={LandHoldings} />} />
+        <Route path="/*" element={<PrivateRoute component={Home} />} />
         <Route
           path="/auth"
           element={authData === null ? <Auth /> : <Navigate to="/" replace />}
