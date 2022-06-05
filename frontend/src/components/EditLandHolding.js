@@ -38,15 +38,18 @@ const EditLandHolding = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      data: { data },
-    } = await updateLandHolding(id, formValues);
-    if (data?.name) {
-      setFormValues(initalValues);
-      toast.success("Successfully Updated A Land Holding!!");
-      navigate("/landHoldings");
-    } else {
-      toast.error("Error Updating Land Holding!!");
+    try {
+      const { data } = await updateLandHolding(id, formValues);
+      if (data?.data?.name) {
+        setFormValues(initalValues);
+        toast.success("Successfully Updated A Land Holding!!");
+        navigate("/landHoldings");
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error("something went wrong");
     }
   };
 

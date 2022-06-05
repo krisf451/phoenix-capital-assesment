@@ -37,14 +37,17 @@ const CreateLandHolding = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      data: { data },
-    } = await createLandHoldings(formValues);
-    if (data?.name) {
-      setFormValues(initalValues);
-      navigate("/landHoldings");
-      toast.success("Successfully Created A Land Holding!!");
-    } else {
+    try {
+      const { data } = await createLandHoldings(formValues);
+      if (data?.data?.name) {
+        setFormValues(initalValues);
+        navigate("/landHoldings");
+        toast.success("Successfully Created A Land Holding!!");
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (e) {
+      console.log(e);
       toast.error("Error Creating Land Holding!!");
     }
   };
@@ -131,6 +134,7 @@ const CreateLandHolding = () => {
           type="text"
           value={range}
           name="range"
+          required
           placeholder="3 Numbers Ending with W or E"
           onChange={handleChange}
           className="h-8 shadow appearance-none border rounded w-3/4 text-gray-700 mb-2 leading-tight focus:outline-none pl-2"

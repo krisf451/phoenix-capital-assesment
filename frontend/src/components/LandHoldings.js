@@ -41,7 +41,7 @@ const LandHoldings = () => {
             Create New Land Holding
           </Link>
 
-          <div className="flex flex-wrap gap-6 justify-center w-full my-4">
+          <div className="flex flex-wrap gap-4 justify-center w-full mt-4">
             {landHoldings?.map((landHolding, i) => (
               <LandHolding landHolding={landHolding} key={i} />
             ))}

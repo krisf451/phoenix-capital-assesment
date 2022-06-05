@@ -25,15 +25,18 @@ const EditOwner = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      data: { data },
-    } = await updateOwner(id, formValues);
-    if (data?.name) {
-      setFormValues(initalValues);
-      navigate("/owners");
-      toast.success("Successfully Updated Owner!!");
-    } else {
-      toast.error("Error Updating an Owner!!");
+    try {
+      const { data } = await updateOwner(id, formValues);
+      if (data?.data?.name) {
+        setFormValues(initalValues);
+        navigate("/owners");
+        toast.success("Successfully Updated Owner!!");
+      } else {
+        toast.error(data?.message);
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error("something went wrong");
     }
   };
 

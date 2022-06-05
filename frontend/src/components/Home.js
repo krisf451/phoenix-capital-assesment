@@ -7,7 +7,7 @@ const Home = () => {
         <h1 className="mb-4 text-3xl opacity-80 hover:opacity-100 transition-all duration-300 ease-linear">
           Our Mission
         </h1>
-        <div className="max-h-[300px] w-1/2 overflow-scroll scrollbar-hide">
+        <div className="max-h-[300px] overflow-scroll scrollbar-hide w-[300px] text-center leading-8">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur
           aliquid odit nisi sapiente, repellat quidem impedit repellendus sunt
           laboriosam illum tempora fuga. Voluptates soluta exercitationem sint
