@@ -52,7 +52,7 @@ const CreateLandHolding = () => {
     }
   };
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
+    <div className="min-h-screen py-8 sm:p-0 w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
       <h1 className="mb-4 text-2xl font-extrabold">Add Land Holding</h1>
       <form
         onSubmit={handleSubmit}

@@ -39,7 +39,7 @@ const CreateOwner = () => {
     }
   };
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-main-bg dark:text-white dark:bg-main-dark-bg">
       <h1 className="mb-4 text-2xl font-extrabold">Add Owner</h1>
       <form
         onSubmit={handleSubmit}
