@@ -75,7 +75,7 @@ const Owner = ({ owner }) => {
         <Link to={`/owners/${owner?._id}/edit`}>
           <AiFillEdit size={25} />
         </Link>
-        <BsTrash size={25} onClick={handleDelete} />
+        <BsTrash size={25} onClick={handleDelete} className="cursor-pointer" />
       </div>
     </div>
   );

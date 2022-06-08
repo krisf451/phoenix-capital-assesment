@@ -55,19 +55,19 @@ const LandHolding = ({ landHolding }) => {
         <p className="text-sm text-gray-500 dark:text-gray-400">
           Net Acres:{" "}
           <span className="text-gray-700 dark:text-white">
-            {landHolding.owner}
+            {landHolding.netMineralAcres}
           </span>
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-400">
           Royalty:{" "}
           <span className="text-gray-700 dark:text-white">
-            {landHolding.owner}
+            {landHolding.royaltyPercentage}
           </span>
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          Secion Name:{" "}
+          Section Name:{" "}
           <span className="text-gray-700 dark:text-white">
-            {landHolding.owner}
+            {landHolding.sectionName}
           </span>
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -94,7 +94,7 @@ const LandHolding = ({ landHolding }) => {
         <Link to={`/landHoldings/${landHolding?._id}/edit`}>
           <AiFillEdit size={25} />
         </Link>
-        <BsTrash size={25} onClick={handleDelete} />
+        <BsTrash size={25} onClick={handleDelete} className="cursor-pointer" />
       </div>
     </div>
   );
